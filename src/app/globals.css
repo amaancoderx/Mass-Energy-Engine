@@ -68,29 +68,113 @@ canvas{position:fixed;inset:0;z-index:0!important}
 .grid-bg{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);background-size:60px 60px;opacity:0.5}
 .center-void{grid-row:2;grid-column:2;pointer-events:none;position:relative}
 .center-hint{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-family:var(--font-mono);font-size:10px;color:var(--faint);letter-spacing:2px;text-transform:uppercase;text-align:center;transition:opacity 0.5s}
+/* ── MOBILE ── */
 @media(max-width:950px){
-  .hud{position:relative;display:flex;flex-direction:column;min-height:100vh;pointer-events:auto}
+  /* Stack everything vertically, allow scroll */
+  .hud{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+    pointer-events:auto;
+    z-index:10;
+  }
   .hud>*{pointer-events:auto}
-  .top-bar{flex-wrap:wrap;gap:8px;padding:10px 14px}
-  .eq-main{font-size:18px}
-  .eq-live{font-size:9px;max-width:100%;text-align:center}
-  .left-panel{grid-row:unset;grid-column:unset;border-right:none;background:var(--panel-bg);padding:10px;overflow-y:visible}
-  .right-panel{grid-row:unset;grid-column:unset;border-left:none;background:var(--panel-bg);padding:10px;overflow-y:visible}
-  .center-void{grid-row:unset;grid-column:unset;min-height:300px;position:relative}
-  .top-bar{grid-column:unset}
-  .bottom-bar{grid-column:unset}
-  .center-hint{bottom:10px}
-  .bottom-bar{flex-wrap:wrap;gap:10px;padding:10px 14px}
+
+  /* Top bar */
+  .top-bar{
+    grid-column:unset;
+    flex-wrap:wrap;gap:8px;padding:10px 14px;
+    background:var(--panel-bg);
+    position:sticky;top:0;z-index:30;
+  }
+  .eq-main{font-size:16px}
+  .eq-live{font-size:8px;max-width:100%;text-align:center}
+
+  /* 3D canvas viewing area — transparent so canvas shows through */
+  .center-void{
+    grid-row:unset;grid-column:unset;
+    order:1;
+    min-height:55vw;
+    max-height:400px;
+    position:relative;
+    background:transparent!important;
+    pointer-events:auto;
+  }
+  .center-hint{bottom:10px;font-size:9px}
+
+  /* Bottom bar — sticky above canvas area */
+  .bottom-bar{
+    grid-column:unset;
+    order:2;
+    flex-wrap:wrap;gap:10px;padding:10px 14px;
+    background:var(--panel-bg);
+    position:sticky;bottom:0;z-index:25;
+    border-top:1px solid var(--border);
+  }
+
+  /* Left panel — controls */
+  .left-panel{
+    grid-row:unset;grid-column:unset;
+    order:3;
+    border-right:none;
+    background:var(--panel-bg);
+    padding:10px;
+    overflow-y:visible;
+  }
+
+  /* Right panel — output */
+  .right-panel{
+    grid-row:unset;grid-column:unset;
+    order:4;
+    border-left:none;
+    background:var(--panel-bg);
+    padding:10px;
+    overflow-y:visible;
+  }
+
+  /* Canvas stays fixed behind everything */
+  canvas{position:fixed;inset:0;z-index:0!important}
+  .vig{position:fixed;z-index:1;pointer-events:none}
+  .grid-bg{position:fixed;z-index:-1}
+
+  /* Smaller periodic table */
   .ptable{grid-template-columns:repeat(18,1fr);gap:1px}
-  .ptable-el{font-size:5.5px}
+  .ptable-el{font-size:5.5px;aspect-ratio:1}
+
+  /* Scale down text */
   .el-symbol{font-size:32px;min-width:48px}
   .el-name{font-size:13px}
   .output-big{font-size:20px}
-  .btn{padding:9px 20px;font-size:10px}
+  .btn{padding:9px 20px;font-size:10px;letter-spacing:1px}
   .mass-slider-wrap input[type=range]{min-width:0}
   .speed-control input{width:60px}
   .panel-section{padding:10px 12px}
   .atom-stats{grid-template-columns:1fr 1fr;gap:4px}
-  canvas{position:fixed;inset:0;z-index:0!important}
-  .vig,.grid-bg{position:fixed}
+  .stat-val{font-size:12px}
+  .method-btn{padding:8px 10px}
+  .method-name{font-size:12px}
+  .comparison-row{padding:3px 0}
+}
+
+/* ── SMALL PHONES ── */
+@media(max-width:480px){
+  .top-bar{padding:8px 10px}
+  .eq-main{font-size:14px}
+  .eq-main sup{font-size:10px}
+  .eq-live{font-size:7px}
+  .logo-text{font-size:7px;letter-spacing:2px}
+  .center-void{min-height:50vw}
+  .ptable-el{font-size:4.5px}
+  .el-symbol{font-size:28px;min-width:40px}
+  .el-name{font-size:12px}
+  .el-meta{font-size:9px}
+  .output-big{font-size:18px}
+  .btn{padding:8px 16px;font-size:9px}
+  .section-title{font-size:8px;letter-spacing:2px}
+  .stat-label{font-size:7px}
+  .stat-val{font-size:11px}
+  .method-desc{font-size:9px}
+  .comparison-row .cmp-val{font-size:11px}
+  .comparison-row .cmp-label{font-size:9px}
 }
