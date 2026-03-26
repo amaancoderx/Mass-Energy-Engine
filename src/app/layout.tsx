@@ -4,6 +4,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "E = mc\u00B2 \u2014 Mass-Energy Conversion Engine",
   description: "Interactive mass-energy conversion simulator with 3D particle visualization",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
